@@ -1,0 +1,23 @@
+<?php
+define( 'LOCALE', 'it_IT');
+define( 'VAT_VALUE', 22 );
+define('SITE_URL', 'https://phpecommercemvc.test/');
+define('DB_USER', '');
+define('DB_NAME', '');
+define('DB_PASSWORD', '');
+define('DB_HOST', '');
+define('ABSPATH', $_SERVER['DOCUMENT_ROOT'] . '/');
+define('PP_BUSINESS', '');
+define('PP_CURRENCY', 'EUR');
+define('PP_LOCATION', 'IT');
+define('PP_RETURN_URL', SITE_URL . 'thank-you');
+define('PP_RETURN_TXT', '');
+define('PP_CANCEL_URL', SITE_URL . 'cancel');
+define('PP_SHIPPING', 0);
+define('PP_FORM_URL', 'https://www.sandbox.paypal.com/cgi-bin/webscr');
+define('EMAIL_FROM', 'PHPEcommerceMVC <orders@phpecommercemvc.test>');
+define('BT_ENVIRONMENT', 'sandbox');
+define('BT_MERCHANT_ID', '');
+define('BT_PUBLIC_KEY', '');
+define('BT_PRIVATE_KEY', '');
+define('USE_BT', true );

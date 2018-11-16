@@ -1,0 +1,22 @@
+Gentile {fullname},
+grazie per il tuo ordine. Di seguito i dettagli del tuo ordine.
+
+Identificativo ordine: {order_id}
+
+{cart}
+
+Totale: {total}
+Totale con IVA: {total_taxes}
+
+Fatturazione:
+========
+{billing}
+
+Spedizione:
+=========
+{shipping}
+
+
+
+===
+PHPEcommerceMVC
