@@ -1,21 +1,21 @@
 $(function() {
 
-        var getProducts = function( value) {
+        var getProducts = function( value ) {
 
-            value = value || null;
+            value = parseInt( value, 10 ) || 1;
 
-            var perPage = 9;
-            var $products = $( ".products .product" );
+            var perPage = 10;
+            var $products = $( ".ajax-scroll .product" );
             var current = $products.length;
-            var offset = (value === null ) ? ( current / perPage ) - 1 : value;
+            var page = value + 1;
             var txt = $products.eq( 0 ).find( ".btn" ).text();
 
-            $.get( "/ajax/infinite", { offset: offset }, function( response ) {
+            $.get( "/ajax/infinite", { page: page }, function( response ) {
                 if( Array.isArray( response ) && response.length > 0 ) {
                     var html = '';
                     for( var i = 0; i < response.length; i++ ) {
                         var product = response[i];
-                        html += '<article class="col-md-4 product">';
+                        html += '<article class="col-md-6 product">';
                         html += '<header><h3>' + product.name + '</h3></header>';
                         html += '<figure><a href="' + product.link + '"><img src="' + product.image + '" class="img-fluid" alt=""></a></figure>';
                         html += ' <p class="text-muted text-truncate">' + product.description + '</p>';
@@ -27,16 +27,16 @@ $(function() {
                         html += '</footer>';
                         html += '</article>';
                     }
-                    $( ".products" ).append( html );
+                    $( ".ajax-scroll" ).data( "page", page ).append( html );
                 }
             });
         };
 
-        if( $( ".products" ).length && $( ".products .product" ).length ) {
-            getProducts( 1 );
+        if( $( ".ajax-scroll" ).length && $( ".ajax-scroll .product" ).length ) {
+            $( ".ajax-scroll" ).data( "page", 1 );
             $( window ).scroll(function() {
                 if( $( window ).scrollTop() + $( window ).height() >= $( document ).height() ) {
-                    getProducts();
+                    getProducts( $( ".ajax-scroll" ).data( "page" ) );
                 }
             });
         }

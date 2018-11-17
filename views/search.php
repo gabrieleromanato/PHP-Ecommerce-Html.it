@@ -5,7 +5,7 @@
 
             <?php foreach($products as $product): ?>
 
-                <article class="col-md-4 product">
+                <article class="col-md-6 product">
                     <header>
                         <h3><?= $product['name']; ?></h3>
                     </header>
@@ -25,11 +25,23 @@
 
             <?php endforeach; ?>
 
+
+
         <?php else: ?>
 
             <p class="alert alert-info"><?= $locale['products']['none']; ?></p>
 
         <?php endif; ?>
     </section>
+
+    <nav id="pagination" class="row mt-lg-4">
+        <ul class="pagination row justify-content-center">
+            <?php for($i = 0; $i < $pages; $i++): $p = $i + 1; ?>
+
+                <li class="page-item<?php if($p == $current_page): ?> active<?php endif; ?>"><a href="?s=<?= $s; ?>&page=<?= $p; ?>" class="page-link"><?= $p; ?></a></li>
+
+            <?php endfor; ?>
+        </ul>
+    </nav>
 
 <?php include('footer.php'); ?>

@@ -204,3 +204,7 @@ body.mobile #form-cart .remove-cart-item {
     display: inline-block;
     margin-right: 1em;
 }
+
+.pagination {
+    width: 100%;
+}

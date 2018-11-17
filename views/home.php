@@ -1,11 +1,11 @@
 <?php include('header.php');?>
 
-<section class="row products">
+<section class="row products ajax-scroll">
     <?php if(isset($products) && is_array($products) && count($products) > 0): ?>
 
     <?php foreach($products as $product): ?>
 
-    <article class="col-md-4 product">
+    <article class="col-md-6 product">
         <header>
             <h3><?= $product['name']; ?></h3>
         </header>

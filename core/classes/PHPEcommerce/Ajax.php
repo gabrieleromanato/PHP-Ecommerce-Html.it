@@ -16,11 +16,12 @@ class Ajax {
 
     public function infinite() {
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $offset = $this->db->escape(trim($_GET['offset']));
-            $int_off = (int) $offset;
-            $per_page = 9;
-            $off = ( $int_off > 0 ) ? $int_off * $per_page : 0;
-            $products = Templater::products($this->db->select("SELECT * FROM products WHERE price > 0 ORDER BY price ASC LIMIT $per_page OFFSET $off"));
+            $total_products = $this->db->select("SELECT count(*) AS total FROM products WHERE price > 0");
+            $per_page = 10;
+            $pages = floor(intval($total_products[0]['total'] ) / $per_page);
+            $current_page = (isset($_GET['page']) && ctype_digit($_GET['page']) && intval($_GET['page']) <= $pages) ? intval($_GET['page']) : 1;
+            $offset = $current_page * $per_page;
+            $products = Templater::products($this->db->select("SELECT * FROM products WHERE price > 0 ORDER BY price ASC LIMIT $per_page OFFSET $offset"));
             $this->json($products);
         } else {
             $this->invalidRequest();
