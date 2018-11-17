@@ -27,10 +27,17 @@ class Render {
         $lang_src = (Session::hasItem('lang')) ? self::getLocale(Session::getItem('lang')) : self::getLocale();
 
         extract($vars);
+
         $template_path = ABSPATH . 'views/' . $template . '.php';
+
         $deviceClass = self::getDeviceClass();
+        include($lang_src);
+
+        if(!isset($title)) {
+            $title = $locale['pages'][$template]['title'];
+        }
         if(file_exists($template_path)) {
-            include($lang_src);
+
             include($template_path);
         }
     }

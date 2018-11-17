@@ -17,7 +17,7 @@ class Ajax {
     public function autocomplete() {
         if($_SERVER['REQUEST_METHOD'] === 'GET') {
             $s = $this->db->escape(trim($_GET['s']));
-            $products = Templater::autocomplete($this->db->select("SELECT * FROM products WHERE title LIKE '%$s%' AND price > 0 ORDER BY price ASC LIMIT 10"));
+            $products = Templater::autocomplete($this->db->select("SELECT * FROM products WHERE title LIKE '%$s%'  ORDER BY price ASC LIMIT 10"));
             $this->json($products);
         } else {
             $this->invalidRequest();
@@ -31,7 +31,7 @@ class Ajax {
             $pages = floor(intval($total_products[0]['total'] ) / $per_page);
             $current_page = (isset($_GET['page']) && ctype_digit($_GET['page']) && intval($_GET['page']) <= $pages) ? intval($_GET['page']) : 1;
             $offset = $current_page * $per_page;
-            $products = Templater::products($this->db->select("SELECT * FROM products WHERE price > 0 ORDER BY price ASC LIMIT $per_page OFFSET $offset"));
+            $products = Templater::products($this->db->select("SELECT * FROM products ORDER BY price ASC LIMIT $per_page OFFSET $offset"));
             $this->json($products);
         } else {
             $this->invalidRequest();

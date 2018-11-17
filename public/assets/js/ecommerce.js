@@ -15,12 +15,16 @@ $(function() {
                         type: "GET",
                         success: function ( data ) {
                             result( $.map( data, function ( item ) {
-                                return item;
+                                return '<span data-href="' + item[0] + '" class="item-suggested">' + item[1] + '</span>';
                             }));
                         }
                     });
+                },
+                select: function() {
+                    var url = $( "#s" ).next().find( ".active .item-suggested" ).data( "href" );
+                    window.location = url;
                 }
-            });
+            })
         }
 
         var getProducts = function( value ) {

@@ -40,6 +40,24 @@ $locale = [
         'same_as_billing' => 'Same as billing'
     ],
     'pages' => [
+        'home' => [
+            'title' => 'PHP E-commerce MVC'
+        ],
+        'search' => [
+            'title' => 'Search results'
+        ],
+        'manufacturers' => [
+            'title' => 'Manufacturers'
+        ],
+        'cart' => [
+            'title' => 'Cart'
+        ],
+        'payment' => [
+            'title' => 'Payment'
+        ],
+        'checkout' => [
+            'title' => 'Checkout'
+        ],
         'thankyou' => [
             'title' => 'Thank you!',
             'content' => 'We have sent you an e-mail with your order details.'

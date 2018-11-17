@@ -120,26 +120,24 @@ class Shop  {
     }
 
     public function index() {
-        $title = 'PHP E-commerce MVC';
-        $products = Templater::products($this->database->select("SELECT * FROM products WHERE price > 0 ORDER BY price ASC LIMIT 10"));
+        $products = Templater::products($this->database->select("SELECT * FROM products ORDER BY price ASC LIMIT 10"));
         $front_cart = Templater::frontCart();
 
-        Render::view('home', ['title' => $title, 'products' => $products, 'front_cart' => $front_cart]);
+        Render::view('home', ['products' => $products, 'front_cart' => $front_cart]);
     }
 
     public function search() {
-        $title = 'Search Results';
-        $query = trim(rawurldecode(urldecode($_GET['s'])));
+        $query = strtolower(trim(rawurldecode(urldecode($_GET['s']))));
         $s = $this->database->escape($query);
-        $total_products = $this->database->select("SELECT count(*) AS total FROM products WHERE title LIKE '%$s%' AND price > 0");
+        $total_products = $this->database->select("SELECT count(*) AS total FROM products WHERE title LIKE '%$s%'");
         $front_cart = Templater::frontCart();
         $per_page = 10;
         $pages = floor(intval($total_products[0]['total'] ) / $per_page);
         $current_page = (isset($_GET['page']) && ctype_digit($_GET['page']) && intval($_GET['page']) <= $pages) ? intval($_GET['page']) : 1;
-        $offset = $current_page * $per_page;
+        $offset = ( $total_products > 1 ) ? $current_page * $per_page : 0;
         $products = Templater::products($this->database->select("SELECT * FROM products WHERE title LIKE '%$s%' ORDER BY price ASC LIMIT 10 OFFSET $offset"));
 
-        Render::view('search', ['s' => htmlentities($s), 'pages' => $pages, 'current_page' => $current_page, 'title' => $title, 'products' => $products, 'front_cart' => $front_cart]);
+        Render::view('search', ['s' => htmlentities($s), 'pages' => $pages, 'current_page' => $current_page, 'products' => $products, 'front_cart' => $front_cart]);
     }
 
     public function ajax($args) {
@@ -191,8 +189,7 @@ class Shop  {
     public function manufacturers() {
         $manufacturers = Templater::manufacturers($this->database->select( 'SELECT DISTINCT manufacturer FROM products ORDER BY rand() LIMIT 21'));
         $front_cart = Templater::frontCart();
-        $title = 'Manufacturers';
-        Render::view('manufacturers', ['title' => $title, 'front_cart' => $front_cart, 'manufacturers' => $manufacturers]);
+        Render::view('manufacturers', ['front_cart' => $front_cart, 'manufacturers' => $manufacturers]);
 
     }
 
@@ -253,9 +250,8 @@ class Shop  {
             $cart_total = Templater::total($sess_cart['total']);
             $items = Templater::cart($sess_cart['items']);
             $front_cart = Templater::frontCart();
-            $title = 'Cart';
             Render::view('cart', ['is_empty_cart' => $is_empty_cart,
-                'cart_total' => $cart_total, 'items' => $items, 'front_cart' => $front_cart, 'title' => $title]);
+                'cart_total' => $cart_total, 'items' => $items, 'front_cart' => $front_cart]);
 
         } else {
             Router::redirect(SITE_URL);
@@ -288,11 +284,9 @@ class Shop  {
                 $items = Templater::cart($sess_cart['items']);
                 $vat = new Vat(VAT_VALUE);
                 $cart_total_taxes = Templater::total($vat->add($sess_cart['total']));
-                $title = 'Checkout';
                 $front_cart = Templater::frontCart();
                 Render::view('checkout',
                 [
-                   'title' => $title,
                    'is_empty_cart' => $is_empty_cart,
                    'cart_total' => $cart_total,
                    'items' => $items,
@@ -320,7 +314,6 @@ class Shop  {
               if ($is_empty_cart) {
                   Router::redirect(SITE_URL);
               } else {
-                  $title = 'Payment';
                   if (!USE_BT) {
                       $paypal = new PayPal();
                       $paypal->addItems($sess_cart['items']);
@@ -340,7 +333,6 @@ class Shop  {
                       $front_cart = Templater::frontCart();
 
                       Render::view('payment', [
-                          'title' => $title,
                           'cart_total' => $cart_total,
                           'items' => $items,
                           'cart_total_taxes' => $cart_total_taxes,
@@ -374,7 +366,6 @@ class Shop  {
                       $front_cart = Templater::frontCart();
 
                       Render::view('payment-bt', [
-                          'title' => $title,
                           'cart_total' => $cart_total,
                           'items' => $items,
                           'cart_total_taxes' => $cart_total_taxes,
@@ -470,7 +461,6 @@ class Shop  {
                 }
 
                 Render::view('thank-you', [
-                    'title' => 'Thank You!'
                 ]);
 
             } else {

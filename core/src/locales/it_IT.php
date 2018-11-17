@@ -40,6 +40,24 @@ $locale = [
         'same_as_billing' => 'Stesso indirizzo della fatturazione'
     ],
     'pages' => [
+        'home' => [
+            'title' => 'PHP E-commerce MVC'
+        ],
+        'search' => [
+            'title' => 'Risultati della ricerca'
+        ],
+        'manufacturers' => [
+            'title' => 'Produttori'
+        ],
+        'cart' => [
+            'title' => 'Carrello'
+        ],
+        'payment' => [
+            'title' => 'Pagamento'
+        ],
+        'checkout' => [
+            'title' => 'Checkout'
+        ],
         'thankyou' => [
             'title' => 'Grazie!',
             'content' => 'Ti abbiamo inviato un\'email con il riepilogo dell\'ordine.'

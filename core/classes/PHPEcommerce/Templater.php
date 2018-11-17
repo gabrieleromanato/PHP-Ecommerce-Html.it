@@ -38,7 +38,7 @@ class Templater {
         $output = [];
         if(count($products) > 0) {
             foreach($products as $product) {
-                $output[] = ucwords($product['title']);
+                $output[] = [SITE_URL . 'product/' . $product['slug'], ucwords($product['title'])];
             }
         }
         return $output;
