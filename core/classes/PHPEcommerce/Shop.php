@@ -126,6 +126,15 @@ class Shop  {
         Render::view('home', ['title' => $title, 'products' => $products, 'front_cart' => $front_cart]);
     }
 
+    public function search() {
+        $title = 'Search Results';
+        $s = $this->database->escape(trim($_GET['s']));
+        $products = Templater::products($this->database->select("SELECT * FROM products WHERE title LIKE '%$s%' AND price > 0 ORDER BY price ASC LIMIT 9"));
+        $front_cart = Templater::frontCart();
+
+        Render::view('search', ['title' => $title, 'products' => $products, 'front_cart' => $front_cart]);
+    }
+
     public function lang($args) {
         $allowed = ['it', 'en'];
         if(in_array($args[0], $allowed)) {

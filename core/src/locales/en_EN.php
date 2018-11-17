@@ -10,7 +10,8 @@ $locale = [
         'finalize' => 'Complete order',
         'paypal' => 'Pay with PayPal',
         'braintree' => 'Pay with Braintree',
-        'add' => 'Add to cart'
+        'add' => 'Add to cart',
+        'search' => 'Search'
     ],
     'products' => [
         'none' => 'No products to display',
