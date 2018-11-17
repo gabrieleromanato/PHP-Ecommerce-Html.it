@@ -30,6 +30,6 @@
             <p class="alert alert-info"><?= $locale['products']['none']; ?></p>
 
         <?php endif; ?>
-    </section
+    </section>
 
 <?php include('footer.php'); ?>

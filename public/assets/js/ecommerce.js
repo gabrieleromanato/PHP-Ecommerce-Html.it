@@ -1,4 +1,46 @@
 $(function() {
+
+        var getProducts = function( value) {
+
+            value = value || null;
+
+            var perPage = 9;
+            var $products = $( ".products .product" );
+            var current = $products.length;
+            var offset = (value === null ) ? ( current / perPage ) - 1 : value;
+            var txt = $products.eq( 0 ).find( ".btn" ).text();
+
+            $.get( "/ajax/infinite", { offset: offset }, function( response ) {
+                if( Array.isArray( response ) && response.length > 0 ) {
+                    var html = '';
+                    for( var i = 0; i < response.length; i++ ) {
+                        var product = response[i];
+                        html += '<article class="col-md-4 product">';
+                        html += '<header><h3>' + product.name + '</h3></header>';
+                        html += '<figure><a href="' + product.link + '"><img src="' + product.image + '" class="img-fluid" alt=""></a></figure>';
+                        html += ' <p class="text-muted text-truncate">' + product.description + '</p>';
+                        html += '<footer class="row">';
+                        html += '<div class="col-md-6">' + product.price + '</div>';
+                        html += '<div class="text-right col-md-6">';
+                        html += '<a href="' + product.add_to_cart_link + '" class="btn btn-success">' + txt + '</a>';
+                        html += '</div>';
+                        html += '</footer>';
+                        html += '</article>';
+                    }
+                    $( ".products" ).append( html );
+                }
+            });
+        };
+
+        if( $( ".products" ).length && $( ".products .product" ).length ) {
+            getProducts( 1 );
+            $( window ).scroll(function() {
+                if( $( window ).scrollTop() + $( window ).height() >= $( document ).height() ) {
+                    getProducts();
+                }
+            });
+        }
+
         var $formCart = $( "#form-cart" );
         var $formCheckout = $( "#form-checkout" );
 

@@ -7,6 +7,7 @@ use PHPEcommerce\Customer as Customer;
 use PHPEcommerce\Product as Product;
 use PHPEcommerce\Order as Order;
 use PHPEcommerce\Session as Session;
+use PHPEcommerce\Ajax as Ajax;
 use Braintree\Gateway as Gateway;
 use Braintree\Transaction as Transaction;
 
@@ -120,7 +121,7 @@ class Shop  {
 
     public function index() {
         $title = 'PHP E-commerce MVC';
-        $products = Templater::products($this->database->select("SELECT * FROM products WHERE price > 0 ORDER BY rand() LIMIT 9"));
+        $products = Templater::products($this->database->select("SELECT * FROM products WHERE price > 0 ORDER BY price ASC LIMIT 9"));
         $front_cart = Templater::frontCart();
 
         Render::view('home', ['title' => $title, 'products' => $products, 'front_cart' => $front_cart]);
@@ -133,6 +134,22 @@ class Shop  {
         $front_cart = Templater::frontCart();
 
         Render::view('search', ['title' => $title, 'products' => $products, 'front_cart' => $front_cart]);
+    }
+
+    public function ajax($args) {
+        if(!$args) {
+            Router::status('403', 'Forbidden');
+            exit;
+        } else {
+            $endpoint = $args[0];
+            $ajax = new Ajax();
+            if($ajax->isEndpoint($endpoint) && method_exists($ajax, $endpoint)) {
+                $ajax->$endpoint();
+            } else {
+                Router::status('403', 'Forbidden');
+                exit;
+            }
+        }
     }
 
     public function lang($args) {

@@ -23,6 +23,6 @@
             <p class="alert alert-info"><?= $locale['manufacturers']['none']; ?></p>
 
         <?php endif; ?>
-    </section
+    </section>
 
 <?php include('footer.php'); ?>
