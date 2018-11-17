@@ -129,14 +129,15 @@ class Shop  {
 
     public function search() {
         $title = 'Search Results';
-        $s = $this->database->escape(trim($_GET['s']));
+        $query = trim(rawurldecode(urldecode($_GET['s'])));
+        $s = $this->database->escape($query);
         $total_products = $this->database->select("SELECT count(*) AS total FROM products WHERE title LIKE '%$s%' AND price > 0");
         $front_cart = Templater::frontCart();
         $per_page = 10;
         $pages = floor(intval($total_products[0]['total'] ) / $per_page);
         $current_page = (isset($_GET['page']) && ctype_digit($_GET['page']) && intval($_GET['page']) <= $pages) ? intval($_GET['page']) : 1;
         $offset = $current_page * $per_page;
-        $products = Templater::products($this->database->select("SELECT * FROM products WHERE title LIKE '%$s%' AND price > 0 ORDER BY price ASC LIMIT 10 OFFSET $offset"));
+        $products = Templater::products($this->database->select("SELECT * FROM products WHERE title LIKE '%$s%' ORDER BY price ASC LIMIT 10 OFFSET $offset"));
 
         Render::view('search', ['s' => htmlentities($s), 'pages' => $pages, 'current_page' => $current_page, 'title' => $title, 'products' => $products, 'front_cart' => $front_cart]);
     }

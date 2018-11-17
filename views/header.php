@@ -105,7 +105,7 @@
 <div id="site" class="container">
     <form action="/search" method="get" id="search-form" class="form-inline text-center mt-lg-3 mb-lg-3">
         <div class="form-group">
-            <input type="text" class="form-control form-control-lg" name="s" placeholder="<?= $locale['buttons']['search']; ?>">
+            <input type="text" class="form-control form-control-lg" name="s" id="s" placeholder="<?= $locale['buttons']['search']; ?>">
             <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-search"></i></button>
         </div>
     </form>

@@ -34,6 +34,16 @@ class Templater {
         return $output;
     }
 
+    public static function autocomplete($products = []) {
+        $output = [];
+        if(count($products) > 0) {
+            foreach($products as $product) {
+                $output[] = ucwords($product['title']);
+            }
+        }
+        return $output;
+    }
+
     public static function frontCart() {
         $output = [];
         if(isset($_SESSION['cart'])) {

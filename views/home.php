@@ -27,7 +27,7 @@
 
     <?php else: ?>
 
-    <p class="alert alert-info"><?= $locale['products']['none']; ?></p>
+    <p class="alert alert-info col-md-12"><?= $locale['products']['none']; ?></p>
 
     <?php endif; ?>
 </section>

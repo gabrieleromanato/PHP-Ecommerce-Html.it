@@ -4,7 +4,7 @@ namespace PHPEcommerce;
 
 class Ajax {
     protected $db;
-    protected $endpoints = ['infinite'];
+    protected $endpoints = ['infinite', 'autocomplete'];
 
     public function __construct() {
         $this->db = new Database();
@@ -12,6 +12,16 @@ class Ajax {
 
     public function isEndpoint($value) {
         return (in_array($value, $this->endpoints));
+    }
+
+    public function autocomplete() {
+        if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $s = $this->db->escape(trim($_GET['s']));
+            $products = Templater::autocomplete($this->db->select("SELECT * FROM products WHERE title LIKE '%$s%' AND price > 0 ORDER BY price ASC LIMIT 10"));
+            $this->json($products);
+        } else {
+            $this->invalidRequest();
+        }
     }
 
     public function infinite() {

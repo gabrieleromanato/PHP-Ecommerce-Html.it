@@ -98,6 +98,60 @@ form div input.input-error {
     font-size: 14px;
 }
 
+.pagination {
+    width: 100%;
+}
+
+.typeahead {
+    border: 1px solid #ddd;
+    border-radius: 0;
+    padding: 8px 12px;
+    max-width: 300px;
+    min-width: 100%;
+    background: #fff;
+    color: #000;
+}
+
+.tt-menu {
+}
+
+ul.typeahead {
+    margin: 0px;
+    padding: 10px 0px;
+}
+
+ul.typeahead.dropdown-menu li a {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #000;
+}
+
+ul.typeahead.dropdown-menu li:last-child a {
+    border-bottom: 0;
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:focus,
+.dropdown-menu>.active>a:hover {
+    text-decoration: none;
+    background-color: #eee;
+    outline: 0;
+}
+
+#search-form,
+#search-form .form-group {
+    width: 100%;
+    position: relative;
+}
+
+#s {
+    width: 90%;
+}
+
+#search-form .btn {
+    width: 10%;
+}
+
 body.mobile .product .row {
     display: block;
     text-align: center;
@@ -205,6 +259,3 @@ body.mobile #form-cart .remove-cart-item {
     margin-right: 1em;
 }
 
-.pagination {
-    width: 100%;
-}

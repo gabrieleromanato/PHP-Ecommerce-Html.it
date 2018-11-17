@@ -1,5 +1,28 @@
 $(function() {
 
+        $( "form" ).each(function() {
+            $( this ).attr( "autocomplete", "off" ).find( ":first" ).
+            before( '<input autocomplete="off" type="text" style="display:none;">' );
+        });
+
+        if( $( "#s" ).length ) {
+            $( "#s" ).typeahead({
+                source: function ( query, result ) {
+                    $.ajax({
+                        url: "/ajax/autocomplete",
+                        data: 's=' + query,
+                        dataType: "json",
+                        type: "GET",
+                        success: function ( data ) {
+                            result( $.map( data, function ( item ) {
+                                return item;
+                            }));
+                        }
+                    });
+                }
+            });
+        }
+
         var getProducts = function( value ) {
 
             value = parseInt( value, 10 ) || 1;

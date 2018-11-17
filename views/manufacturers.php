@@ -20,7 +20,7 @@
 
         <?php else: ?>
 
-            <p class="alert alert-info"><?= $locale['manufacturers']['none']; ?></p>
+            <p class="alert alert-info col-md-12"><?= $locale['manufacturers']['none']; ?></p>
 
         <?php endif; ?>
     </section>
