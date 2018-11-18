@@ -11,7 +11,7 @@ define('PP_BUSINESS', '');
 define('PP_CURRENCY', 'EUR');
 define('PP_LOCATION', 'IT');
 define('PP_RETURN_URL', SITE_URL . 'thank-you');
-define('PP_RETURN_TXT', 'Ritorna a PHPEcommerce');
+define('PP_RETURN_TXT', '');
 define('PP_CANCEL_URL', SITE_URL . 'cancel');
 define('PP_SHIPPING', 0);
 define('PP_FORM_URL', 'https://www.sandbox.paypal.com/cgi-bin/webscr');

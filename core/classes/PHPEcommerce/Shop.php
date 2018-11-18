@@ -144,7 +144,7 @@ class Shop  {
         $offset = ( $total_products > 1 ) ? $current_page * $per_page : 0;
         $products = Templater::products($this->database->select("SELECT * FROM products WHERE title LIKE '%$s%' ORDER BY price ASC LIMIT 10 OFFSET $offset"));
 
-        Render::view('search', ['s' => htmlentities($s), 'pages' => $pages, 'current_page' => $current_page, 'products' => $products, 'front_cart' => $front_cart]);
+        Render::view('search', ['s' => Validator::sanitize($s), 'pages' => $pages, 'current_page' => $current_page, 'products' => $products, 'front_cart' => $front_cart]);
     }
 
     public function ajax($args) {
@@ -210,7 +210,7 @@ class Shop  {
         if($this->database->exists("SELECT * FROM products WHERE manufacturer = '$man_slug'")) {
             $products = Templater::products($this->database->select("SELECT * FROM products WHERE manufacturer = '$man_slug'"));
             $front_cart = Templater::frontCart();
-            $title = ucwords($man_slug);
+            $title = Validator::sanitize(ucwords($man_slug));
             Render::view('manufacturer', ['title' => $title, 'front_cart' => $front_cart, 'products' => $products]);
         } else {
             Router::status('404', 'Not Found');

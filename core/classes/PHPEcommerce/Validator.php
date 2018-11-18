@@ -3,6 +3,13 @@
 namespace PHPEcommerce;
 
 class Validator {
+    public static function sanitize( $value ) {
+        require_once ABSPATH . 'core/lib/htmlpurifier/library/HTMLPurifier.auto.php';
+        $config = \HTMLPurifier_Config::createDefault();
+        $purifier = new \HTMLPurifier($config);
+        $clean_html = $purifier->purify($value);
+        return $clean_html;
+    }
     public static function isPayPalRequest() {
         return (isset($_REQUEST['st']) && strtolower($_REQUEST['st']) == 'completed');
     }
