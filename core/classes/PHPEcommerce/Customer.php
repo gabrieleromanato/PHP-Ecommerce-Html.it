@@ -33,6 +33,9 @@ class Customer {
     }
 
     public function save() {
+        if(READONLY) {
+            return true;
+        }
         $db = new Database();
 
         $id = $this->id;

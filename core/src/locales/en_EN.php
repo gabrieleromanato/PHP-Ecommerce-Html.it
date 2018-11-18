@@ -41,7 +41,7 @@ $locale = [
     ],
     'pages' => [
         'home' => [
-            'title' => 'PHP E-commerce MVC'
+            'title' => 'PHP E-commerce'
         ],
         'search' => [
             'title' => 'Search results'
@@ -57,6 +57,9 @@ $locale = [
         ],
         'checkout' => [
             'title' => 'Checkout'
+        ],
+        'thank-you' => [
+            'title' => 'Thank you!'
         ],
         'thankyou' => [
             'title' => 'Thank you!',

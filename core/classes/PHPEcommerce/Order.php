@@ -24,12 +24,20 @@ class Order {
         $this->setTotalWithTaxes();
     }
 
-    private function setTotalWithTaxes() {
+    public function setTotalWithTaxes() {
         if(class_exists('Vat') && defined('VAT_VALUE')) {
             $vat = new Vat(VAT_VALUE);
             $this->totalWithTaxes = $vat->add($this->total);
         } else {
             $this->totalWithTaxes = $this->total;
+        }
+    }
+
+    public function addFee($amount, $type = 'tax') {
+        if($type === 'tax') {
+            $this->totalWithTaxes = $this->total * $amount;
+        } else {
+            $this->totalWithTaxes = $this->total + $amount;
         }
     }
 
@@ -77,6 +85,9 @@ class Order {
     }
 
     public function save() {
+        if(READONLY) {
+            return true;
+        }
         $db = new Database();
         $id = $this->id;
         $created = strftime('%Y-%m-%d %H:%M:%S', time());

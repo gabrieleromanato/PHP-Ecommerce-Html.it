@@ -12,7 +12,7 @@
 <header id="site-header">
     <?php if($deviceClass == 'desktop'): ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">PHP Ecommerce MVC</a>
+        <a class="navbar-brand" href="/">PHP Ecommerce</a>
         <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
             <li class="nav-item">

@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <style type="text/css" media="screen">
+            body {
+                font: 13px/1.5 Arial, sans-serif;
+                background: #888;
+                color: #000;
+            }
+            #content {
+                margin: 30px 15%;
+                padding: 25px;
+                background: #fff;
+                border: 2px solid #aaa;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+
+            th, td {
+                border: 1px solid #ddd;
+                padding: 5px;
+                text-align: left;
+                font-weight: normal;
+            }
+
+            thead {
+                background: #eee;
+            }
+
+            thead th { text-transform: uppercase; }
+        </style>
+    </head>
+    <body>
+    <div id="content">
+    <p>Gentile {fullname},<br>
+        grazie per il tuo ordine. Di seguito i dettagli del tuo ordine.</p>
+
+        <p><b>Identificativo ordine:</b> {order_id}</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Prodotto</th>
+                    <th>Prezzo</th>
+                    <th>Quantità</th>
+                </tr>
+            </thead>
+            <tbody>
+            {cart}
+            </tbody>
+        </table>
+
+
+
+        <p><b>Totale:</b> {total}</p>
+        <p><b>Totale con IVA:</b> {total_taxes}</p>
+
+        <h4>Fatturazione</h4>
+    <address>
+    {billing}
+    </address>
+
+        <h4>Spedizione</h4>
+        <address>{shipping}</address>
+
+
+
+    <hr>
+        <address><small>PHPEcommerce</small></address>
+    </div>
+    </body>
+</html>

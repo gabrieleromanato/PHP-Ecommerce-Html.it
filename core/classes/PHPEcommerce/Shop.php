@@ -37,6 +37,13 @@ class Shop  {
 
             if($order->save()) {
                 Session::setItem('order_id', $order->getId());
+                if(READONLY) {
+                    $order->addFee(((VAT_VALUE / 100) + 1));
+                    $order_data = ['billing' => $order->getBilling(), 'shipping' => $order->getShipping(), 'id' => $order->getId(), 'cart' => serialize($cart->getItems()), 'total' => $order->getTotal(), 'total_taxes' => $order->getTotalWithTaxes()];
+                    $customer_data = ['fullname' => $data['billing']['firstname'] . ' ' . $data['billing']['lastname'], 'email' => $data['billing']['email']];
+                    Session::setItem('order_data', $order_data, true);
+                    Session::setItem('customer_data', $customer_data, true);
+                }
             }
         }
     }
@@ -448,28 +455,43 @@ class Shop  {
 
     public function thankYou() {
         if(Session::hasItem('order_id')) {
-            $order_id = Session::getItem('order_id');
-            $db = new Database();
-            $query_order = "SELECT * FROM orders WHERE id = '$order_id'";
-            $order_res = $db->select($query_order);
-            $order_data = $order_res[0];
-            $query_customer = "SELECT * FROM customers WHERE id = '" . $order_data['customer'] . "'";
-            $customer_res = $db->select($query_customer);
-            $customer = ['fullname' => $customer_res[0]['firstname'] . ' ' . $customer_res[0]['lastname'], 'email' => $customer_res[0]['email']];
+            if(!READONLY) {
+                $order_id = Session::getItem('order_id');
+                $db = new Database();
+                $query_order = "SELECT * FROM orders WHERE id = '$order_id'";
+                $order_res = $db->select($query_order);
+                $order_data = $order_res[0];
+                $query_customer = "SELECT * FROM customers WHERE id = '" . $order_data['customer'] . "'";
+                $customer_res = $db->select($query_customer);
+                $customer = ['fullname' => $customer_res[0]['firstname'] . ' ' . $customer_res[0]['lastname'], 'email' => $customer_res[0]['email']];
 
-            if(Validator::isPayPalRequest()) {
+                if (Validator::isPayPalRequest()) {
 
-                if (Mail::sendConfirmation($order_data, $customer)) {
-                    if ($db->query("UPDATE orders SET status = 1 WHERE id = '$order_id'")) {
+                    if (Mail::sendConfirmation($order_data, $customer)) {
+                        if ($db->query("UPDATE orders SET status = 1 WHERE id = '$order_id'")) {
+                            Session::end();
+                        }
+                    }
+
+                    Render::view('thank-you', [
+                    ]);
+
+                } else {
+                    Router::redirect(SITE_URL . 'payment/');
+                }
+            } else {
+                if (Validator::isPayPalRequest()) {
+                   $order_data = Session::getItem('order_data', true);
+                   $customer = Session::getItem('customer_data', true);
+                    if (Mail::sendConfirmation($order_data, $customer)) {
                         Session::end();
                     }
+
+                    Render::view('thank-you', [
+                    ]);
+                } else {
+                    Router::redirect(SITE_URL . 'payment/');
                 }
-
-                Render::view('thank-you', [
-                ]);
-
-            } else {
-                Router::redirect(SITE_URL . 'payment/');
             }
 
         } else {
