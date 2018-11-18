@@ -5,10 +5,13 @@ namespace PHPEcommerce;
 class Templater {
     public static function manufacturers($data) {
         $output = [];
+        $images = range(1, 512);
         foreach($data as $d) {
+            $img = $images[mt_rand(0, count($images) - 1)];
             $output[] = [
                 'name' => ucwords($d['manufacturer']),
-                'link' => SITE_URL . 'manufacturer/' . $d['manufacturer']
+                'link' => SITE_URL . 'manufacturer/' . $d['manufacturer'],
+                'image' => SITE_URL . 'public/assets/images/product-' . $img . '.jpg'
             ];
         }
         return $output;

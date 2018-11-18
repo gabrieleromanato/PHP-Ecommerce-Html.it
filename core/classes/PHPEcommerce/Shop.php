@@ -187,9 +187,14 @@ class Shop  {
     }
 
     public function manufacturers() {
-        $manufacturers = Templater::manufacturers($this->database->select( 'SELECT DISTINCT manufacturer FROM products ORDER BY rand() LIMIT 21'));
+        $total_manuf = count($this->database->select("SELECT DISTINCT manufacturer FROM products"));
+        $per_page = 10;
+        $pages = floor(intval($total_manuf ) / $per_page);
+        $current_page = (isset($_GET['page']) && ctype_digit($_GET['page']) && intval($_GET['page']) <= $pages) ? intval($_GET['page']) : 1;
+        $offset = ( $total_manuf > 1 ) ? $current_page * $per_page : 0;
+        $manufacturers = Templater::manufacturers($this->database->select( "SELECT DISTINCT manufacturer FROM products ORDER BY manufacturer LIMIT 10 OFFSET $offset"));
         $front_cart = Templater::frontCart();
-        Render::view('manufacturers', ['front_cart' => $front_cart, 'manufacturers' => $manufacturers]);
+        Render::view('manufacturers', ['pages' => $pages, 'current_page' => $current_page, 'front_cart' => $front_cart, 'manufacturers' => $manufacturers]);
 
     }
 
