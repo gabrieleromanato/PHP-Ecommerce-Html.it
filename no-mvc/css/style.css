@@ -1,0 +1,99 @@
+:focus,
+:active {
+    outline-style: none !important;
+    box-shadow: none !important;
+}
+
+.products, .container {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.product {
+    margin-bottom: 30px;
+}
+
+.products .product h3 {
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.products .product figure {
+    margin: 8px 0;
+    max-height: 180px;
+    overflow: hidden;
+}
+
+form input.qty {
+    width: 3em;
+    margin: 0 0.4em;
+}
+
+#form-cart table tbody tr > td:first-child {
+    max-width: 100px;
+}
+
+form input {
+    box-shadow: none;
+    transition-property: border-color background-color color;
+}
+
+form div input:not([type=submit]):focus {
+    border-color: #000;
+    box-shadow: none;
+}
+
+form div input.input-error {
+    border-color: #dc3545;
+    background-color: #f5a7af;
+}
+
+#front-cart {
+    position: relative;
+}
+
+#front-cart-count {
+    display: inline-block;
+    margin-left: 6px;
+    font-weight: bold;
+    color: #fff;
+    padding: 3px;
+    border: 1px solid #000;
+    background: #000;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    font-size: 12px;
+}
+
+#front-cart-contents {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top: 100%;
+    z-index: 10000;
+    right: 1%;
+    width: 280px;
+    background: #fff;
+    border: 1px solid #ddd;
+    display: none;
+    font-size: 13px;
+}
+
+#front-cart-contents > li {
+    display: block;
+    padding: 1em;
+    border-bottom: 1px solid #ddd;
+}
+
+#front-cart-contents-footer {
+    border: none;
+    padding: 1.5em 0;
+    background: #fafafa;
+}
+
+#front-cart-contents h5 {
+    font-size: 14px;
+}

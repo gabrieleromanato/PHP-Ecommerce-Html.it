@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^/?product/(.*?)/?$ /product.php?id=$1 [L]
+RewriteRule ^/?add-to-cart/?$ /add-to-cart.php
+RewriteRule ^/?cart/?$ /cart.php
+RewriteRule ^/?checkout/?$ /checkout.php
+RewriteRule ^/?payment/?$ /payment.php
+RewriteRule ^/?thank-you/?$ /thank-you.php
+RewriteRule ^/?cancel/?$ /cancel.php

@@ -1,0 +1,22 @@
+Dear {fullname},
+thanks for your order. Here are your order details.
+
+Order ID: {order_id}
+
+{cart}
+
+Total: {total}
+Total with taxes: {total_taxes}
+
+Billing:
+========
+{billing}
+
+Shipping:
+=========
+{shipping}
+
+
+
+===
+PHPEcommerce
